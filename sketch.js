@@ -2,14 +2,15 @@ var cx
 var cy
 var stars
 var speed = 10000000
-
+var initdis = 5000000000
+var density = 100
 function setup() {
     createCanvas(windowWidth,windowHeight)
     cx = windowWidth/2
     cy = windowHeight/2
     stars = []
-    for(var i=0;i<100;i++){
-        stars.push(new star(random(windowWidth) - cx,random(windowHeight) - cy,random(5000000000)))
+    for(var i=0;i<density;i++){
+        stars.push(new star(random(windowWidth) - cx,random(windowHeight) - cy,random(initdis),1))
     }
 }
 
@@ -20,14 +21,17 @@ function draw() {
     }
 }
 
-function star(x,y,z){
+function star(x,y,z,s){
 
-    this.setup = function(x,y,z){
+    this.setup = function(x,y,z,s){
         this.x = x
         this.y = y
         this.z = z
         this.fx = (windowWidth + 2*z)*x
         this.fy = (windowHeight + 2*z)*y
+        this.fs = (windowHeight + 2*initdis)*s
+        this.s = this.fs/(windowHeight + 2*(this.z))
+        
     }
 
     this.setup(x,y,z)
@@ -36,17 +40,18 @@ function star(x,y,z){
         this.z -= speed
         this.x = this.fx/(windowWidth + 2*(this.z))
         this.y = this.fy/(windowHeight + 2*(this.z))
+        this.s = this.fs/(windowHeight + 2*(this.z))
         this.show()
         this.check()
     } 
 
     this.show = function(){
-        ellipse(this.x + cx ,this.y + cy,10,10)
+        ellipse(this.x + cx ,this.y + cy,this.s,this.s)
     }
 
     this.check = function(){
         if(this.z <= 0){
-            this.setup(random(windowWidth) - cx,random(windowHeight) - cy,random(5000000000))
+            this.setup(random(windowWidth) - cx,random(windowHeight) - cy,random(initdis),1)
         }
     }
 }
