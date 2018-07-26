@@ -33,7 +33,9 @@ function star(){
         this.fy = (windowHeight + 2*z)*y
         this.fs = (windowHeight + 2*initdis)*s
         this.s = this.fs/(windowHeight + 2*(this.z))
-        
+        this.r = random(255)
+        this.g = random(255)
+        this.b = random(255)
     }
 
     this.go = function(){
@@ -47,11 +49,12 @@ function star(){
 
     this.show = function(){
         ellipse(this.x + cx ,this.y + cy,this.s,this.s)
+        fill(this.r,this.g,this.b)
     }
 
     this.check = function(){
         if(this.z <= 0){
-            this.setup(random(windowWidth) - cx,random(windowHeight) - cy,random(initdis/5,initdis),1)
+            this.setup(random(windowWidth) - cx,random(windowHeight) - cy,random(initdis/4,initdis/3),1)
         }
     }
 }
