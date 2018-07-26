@@ -3,14 +3,16 @@ var cy
 var stars
 var speed = 10000000
 var initdis = 5000000000
-var density = 100
+var density = 1000
 function setup() {
     createCanvas(windowWidth,windowHeight)
     cx = windowWidth/2
     cy = windowHeight/2
     stars = []
     for(var i=0;i<density;i++){
-        stars.push(new star(random(windowWidth) - cx,random(windowHeight) - cy,random(initdis),1))
+        var star0 = new star()
+        stars.push(star0)
+        star0.setup(random(windowWidth) - cx,random(windowHeight) - cy,random(initdis),1)
     }
 }
 
@@ -21,7 +23,7 @@ function draw() {
     }
 }
 
-function star(x,y,z,s){
+function star(){
 
     this.setup = function(x,y,z,s){
         this.x = x
@@ -33,8 +35,6 @@ function star(x,y,z,s){
         this.s = this.fs/(windowHeight + 2*(this.z))
         
     }
-
-    this.setup(x,y,z)
 
     this.go = function(){
         this.z -= speed
@@ -51,7 +51,7 @@ function star(x,y,z,s){
 
     this.check = function(){
         if(this.z <= 0){
-            this.setup(random(windowWidth) - cx,random(windowHeight) - cy,random(initdis),1)
+            this.setup(random(windowWidth) - cx,random(windowHeight) - cy,random(initdis/5,initdis),1)
         }
     }
 }
